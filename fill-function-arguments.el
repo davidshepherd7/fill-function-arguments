@@ -33,6 +33,10 @@
 
 ;;; Helpers
 
+(defun -in-comment-p ()
+  "Check if we are inside a comment"
+  (nth 4 (syntax-ppss)))
+
 (defun -in-docs-p ()
   "Check if we are inside a string or comment"
   (nth 8 (syntax-ppss)))
@@ -102,7 +106,7 @@
   (save-restriction
     (-narrow-to-funcall)
     (cond
-     ((and fall-through-to-fill-paragraph (-in-docs-p))
+     ((and fall-through-to-fill-paragraph (-in-comment-p))
       (fill-paragraph))
      ((-single-line-p)
       (to-multi-line))
