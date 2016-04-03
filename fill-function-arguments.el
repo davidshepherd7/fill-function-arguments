@@ -29,9 +29,7 @@
 
 (defun max-line ()
   "Return the vertical position of point-max"
-  (save-excursion
-    (goto-char (point-max))
-    (1+ (count-lines 1 (point)))))
+  (line-number-at-pos (point-max)))
 
 (defun -opening-paren-location ()
   (nth 1 (syntax-ppss)))
@@ -50,26 +48,29 @@
 (defun -narrow-to-funcall ()
   (interactive)
   (let ((l (-paren-locations)))
-    (narrow-to-region (car l) (cdr l))))
+    (when l
+      (narrow-to-region (car l) (cdr l)))
+    t))
 
 (defun -single-line-p()
   "Is the current function call on a single line?"
   (-narrow-to-funcall)
-  (not (equal (max-line) 0))
-  (widen))
+  (let ((out (equal (max-line) 1)))
+    (widen)
+    out))
 
-
+  
 
 ;;; Main functions
 
-(defun to-single-line ()
-  (interactive)
-  (-narrow-to-funcall)
-  (save-excursion
-    (while (not (-single-line-p))
-      (goto-char (point-max))
-      (delete-indentation)))
-  (widen))
+  (defun to-single-line ()
+    (interactive)
+    (-narrow-to-funcall)
+    (save-excursion
+      (while (not (-single-line-p))
+        (goto-char (point-max))
+        (delete-indentation)))
+    (widen))
 
   (defun to-multi-line ()
     (interactive)
