@@ -23,13 +23,19 @@
 ;; Tell names that it's ok to expand things inside these threading macros.
 :functionlike-macros (-->)
 
+(defcustom fall-through-to-fill-paragraph
+  t
+  "If true dwim will fill paragraphs when in comments or strings"
+  :group 'fill-function-arguments)
+
+
 
 
 ;;; Helpers
 
-(defun max-line ()
-  "Return the vertical position of point-max"
-  (line-number-at-pos (point-max)))
+(defun -in-docs-p ()
+  "Check if we are inside a string or comment"
+  (nth 8 (syntax-ppss)))
 
 (defun -opening-paren-location ()
   (nth 1 (syntax-ppss)))
@@ -54,36 +60,56 @@
 
 (defun -single-line-p()
   "Is the current function call on a single line?"
-  (-narrow-to-funcall)
-  (let ((out (equal (max-line) 1)))
-    (widen)
-    out))
+  (equal (line-number-at-pos (point-max)) 1))
 
-  
+
 
 ;;; Main functions
 
-  (defun to-single-line ()
-    (interactive)
-    (-narrow-to-funcall)
-    (save-excursion
+(defun to-single-line ()
+  (interactive)
+  (save-excursion
+    (save-restriction
+      (-narrow-to-funcall)
       (while (not (-single-line-p))
         (goto-char (point-max))
-        (delete-indentation)))
-    (widen))
+        (delete-indentation)))))
 
-  (defun to-multi-line ()
-    (interactive)
+(defun to-multi-line ()
+  (interactive)
+  (let ((initial-opening-paren (-opening-paren-location)))
     (save-excursion
-      (goto-char (point-min))
-      ;; (while (search-forward)))
-      ))
+      (save-restriction
+        (-narrow-to-funcall)
+        (goto-char (point-min))
+        ;; newline after opening paren
+        (forward-char)
+        (insert "\n")
 
-  (defun fill-function-dwim ()
-    (interactive)
-    (if (-single-line-p)
-        (to-multi-line)
-      (to-single-line)))
+        ;; commas
+        (while (re-search-forward "," nil t)
+          (when (and (not (-in-docs-p))
+                     (equal (-opening-paren-location) initial-opening-paren))
+            (replace-match ",\n")))
+
+        ;; Newline before closing paren
+        (goto-char (point-max))
+        (backward-char)
+        (insert "\n")))))
+
+(defun dwim ()
+  (interactive)
+  (save-restriction
+    (-narrow-to-funcall)
+    (cond
+     ((and fall-through-to-fill-paragraph (-in-docs-p))
+      (fill-paragraph))
+     ((-single-line-p)
+      (to-multi-line))
+     (t
+      (to-single-line)))))
+
+
 
   
   ) ; end of namespace
