@@ -1,0 +1,4 @@
+/fill-function-arguments.elc
+*.elc
+/.ecukes-failing-scenarios
+/.cask
