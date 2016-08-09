@@ -28,6 +28,17 @@
   "If true dwim will fill paragraphs when in comments or strings"
   :group 'fill-function-arguments)
 
+(defcustom first-argument-same-line
+  nil
+  "If true don't move first argument to it's own line (e.g. as needed by xml tags)"
+  :group 'fill-function-arguments
+  )
+
+(defcustom argument-sep
+  ","
+  "Character separating arguments"
+  :group 'fill-function-arguments
+  )
 
 
 
@@ -88,13 +99,14 @@
         (goto-char (point-min))
         ;; newline after opening paren
         (forward-char)
-        (insert "\n")
+        (when (not first-argument-same-line)
+          (insert "\n"))
 
         ;; commas
-        (while (re-search-forward "," nil t)
+        (while (re-search-forward argument-sep nil t)
           (when (and (not (-in-docs-p))
                      (equal (-opening-paren-location) initial-opening-paren))
-            (replace-match ",\n")))
+            (replace-match (concat argument-sep "\n"))))
 
         ;; Newline before closing paren
         (goto-char (point-max))
