@@ -1,5 +1,5 @@
 # fill-function-arguments
-Add/remove line breaks between function arguments in C-like languages
+Add/remove line breaks between function arguments and similar constructs
 
 # Usage
 
@@ -16,10 +16,39 @@ to
     	get_value(x, y)
     )
     
-and back. Also works with arrays (`[x, y, z]`).
+    and back.
+
+Also works with arrays (`[x, y, z]`) and dictionary literals (`{a: b, c: 1}`).
 
 If no function call is found `fill-function-arguments-dwim` will call `fill-paragraph`, 
 so you can replace an existing `fill-paragraph` keybinding with it.
+
+Recommended binding:
+
+      (add-hook 'prog-mode-hook (lambda () (local-set-key (kbd "M-q") #'fill-function-arguments-dwim)))
+
+
+Also works well with xml tags with some customisation:
+
+      (add-hook 'sgml-mode-hook (lambda ()
+                              (setq-local fill-function-arguments-first-argument-same-line t)
+                              (setq-local fill-function-arguments-argument-sep " ")
+                              (local-set-key (kbd "M-q") #'fill-function-arguments-dwim)))
+
+Should work for lisp-like languages in a similar way, but I haven't tried this yet.
+
+
+# Non-features
+
+* Doesn't try to fix the indentation. I use aggressive-indent-mode which
+  automatically does this after every operation. Would probably be tricky to
+  implement this so I doubt I will.
+
+* Doesn't try to clean up trailing whitespace. I use ws-butler to automatically
+  clean it up. Could probably implement this without too much difficulty if
+  someone wants it (open an issue if you do).
+
+
 
 # Installation
 
