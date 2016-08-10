@@ -30,11 +30,11 @@
 
 (defcustom first-argument-same-line
   nil
-  "If true don't move first argument to it's own line (e.g. as needed by xml tags)"
+  "If true keep the first argument on the same line as the opening paren (e.g. as needed by xml tags)"
   :group 'fill-function-arguments
   )
 
-(defcustom argument-sep
+(defcustom argument-separator
   ","
   "Character separating arguments"
   :group 'fill-function-arguments
@@ -103,10 +103,10 @@
           (insert "\n"))
 
         ;; commas
-        (while (re-search-forward argument-sep nil t)
+        (while (re-search-forward argument-separator nil t)
           (when (and (not (-in-docs-p))
                      (equal (-opening-paren-location) initial-opening-paren))
-            (replace-match (concat argument-sep "\n"))))
+            (replace-match (concat argument-separator "\n"))))
 
         ;; Newline before closing paren
         (goto-char (point-max))
