@@ -55,6 +55,13 @@
 (defun -opening-paren-location ()
   (nth 1 (syntax-ppss)))
 
+(defun -enclosing-paren ()
+  "Return the opening parenthesis of the enclosing parens, or nil
+        if not inside any parens."
+  (let ((ppss (syntax-ppss)))
+    (when (nth 1 ppss)
+      (char-after (nth 1 ppss)))))
+
 (defun -paren-locations ()
   "Get a pair containing the enclosing parens"
   (let ((start (-opening-paren-location)))
@@ -81,7 +88,10 @@
   (and fall-through-to-fill-paragraph
        (or (-in-comment-p)
            (-in-docs-p)
-           (not (derived-mode-p 'prog-mode)))))
+           (and (not (derived-mode-p 'prog-mode))
+                (or (not (derived-mode-p 'sgml-mode))
+                    (not (equal (-enclosing-paren) ?<))))
+           )))
 
 
 
