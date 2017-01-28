@@ -3,7 +3,7 @@ Feature: Fill html tag attributes
     Given I clear the buffer
     Given I turn on sgml-mode
     When I set fill-function-arguments-first-argument-same-line to t
-    When I set fill-function-arguments-argument-sep to " "
+    When I set fill-function-arguments-argument-separator to " "
 
 
   # html
