@@ -77,6 +77,12 @@
   "Is the current function call on a single line?"
   (equal (line-number-at-pos (point-max)) 1))
 
+(defun -suppress-argument-fill-p ()
+  (and fall-through-to-fill-paragraph
+       (or (-in-comment-p)
+           (-in-docs-p)
+           (not (derived-mode-p 'prog-mode)))))
+
 
 
 ;;; Main functions
@@ -118,12 +124,9 @@
   (save-restriction
     (-narrow-to-funcall)
     (cond
-     ((and fall-through-to-fill-paragraph (or (-in-comment-p) (-in-docs-p) (not (derived-mode-p 'prog-mode))))
-      (fill-paragraph))
-     ((-single-line-p)
-      (to-multi-line))
-     (t
-      (to-single-line)))))
+     ((-suppress-argument-fill-p) (fill-paragraph))
+     ((-single-line-p) (to-multi-line))
+     (t (to-single-line)))))
 
 
 
