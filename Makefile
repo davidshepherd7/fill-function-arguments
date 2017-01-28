@@ -13,6 +13,9 @@ clean :
 ecukes: build
 	${CASK} exec ecukes
 
+test: build
+	${CASK} exec ecukes
+
 install:
 	${CASK} install
 
