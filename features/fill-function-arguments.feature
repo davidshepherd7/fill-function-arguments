@@ -76,5 +76,15 @@ Feature: Fill function arguments
     """
     // lorem ipsum aoru aouwf owu awoupna awfoudnnrsouvn oseinadn4iresarostunoaunawfonuawufn asoun afwun afoutn awfonu
     """
+    When I go to word "lorem"
+    When I call "fill-function-arguments-dwim"
+    Then I should see pattern "awfoudnnrsouvn$"
+
+  Scenario: dwim fill comments
+    When I insert:
+    """
+    "lorem ipsum aoru aouwf owu awoupna awfoudnnrsouvn oseinadn4iresarostunoaunawfonuawufn asoun afwun afoutn awfonu"
+    """
+    When I go to word "lorem"
     When I call "fill-function-arguments-dwim"
     Then I should see pattern "awfoudnnrsouvn$"

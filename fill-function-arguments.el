@@ -118,7 +118,7 @@
   (save-restriction
     (-narrow-to-funcall)
     (cond
-     ((and fall-through-to-fill-paragraph (or (-in-comment-p) (not (derived-mode-p 'prog-mode))))
+     ((and fall-through-to-fill-paragraph (or (-in-comment-p) (-in-docs-p) (not (derived-mode-p 'prog-mode))))
       (fill-paragraph))
      ((-single-line-p)
       (to-multi-line))
