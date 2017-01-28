@@ -1,6 +1,8 @@
 # fill-function-arguments
 Add/remove line breaks between function arguments and similar constructs
 
+[![Travis](https://travis-ci.org/davidshepherd7/fill-function-arguments.svg?branch=master)](https://travis-ci.org/davidshepherd7/fill-function-arguments)
+
 # Usage
 
 Put point inside the brackets and call `fill-function-arguments-dwim` to convert
