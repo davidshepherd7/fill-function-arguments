@@ -20,6 +20,19 @@ Feature: Fill html tag attributes
     When I call "fill-function-arguments-to-single-line"
     Then I should see "<foo x y z>"
 
+  Scenario: to single line html with attribute arguments
+     When I insert:
+    """
+    <foo
+    x="one"
+    y="two"
+    z="three"
+    >
+    """
+    When I place the cursor after "x"
+    When I call "fill-function-arguments-to-single-line"
+    Then I should see "<foo x="one" y="two" z="three">"
+
 
   Scenario: to multi line html
     When I insert:
@@ -32,6 +45,20 @@ Feature: Fill html tag attributes
     Then I should see pattern "x\s-*$"
     Then I should see pattern "y\s-*$"
     Then I should see pattern "z\s-*$"
+    Then I should see pattern ">\s-*$"
+
+
+  Scenario: to multi line html with attribute arguments
+    When I insert:
+    """
+    <foo x="one" y="two" z="three">
+    """
+    When I place the cursor after "x"
+    When I call "fill-function-arguments-to-multi-line"
+    Then I should see pattern "<foo\s-*$"
+    Then I should see pattern "x="one"\s-*$"
+    Then I should see pattern "y="two"\s-*$"
+    Then I should see pattern "z="three"\s-*$"
     Then I should see pattern ">\s-*$"
 
 

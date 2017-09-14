@@ -118,11 +118,14 @@
         (when (not first-argument-same-line)
           (insert "\n"))
 
-        ;; commas
-        (while (re-search-forward argument-separator nil t)
-          (when (and (not (-in-docs-p))
-                     (equal (-opening-paren-location) initial-opening-paren))
-            (replace-match (concat argument-separator "\n"))))
+        (while (search-forward argument-separator nil t)
+          ;; We have to save the match data here because the functions below
+          ;; could (and sometimes do) modify it.
+          (let ((saved-match-data (match-data)))
+            (when (save-excursion (and (not (-in-docs-p))
+                                       (equal (-opening-paren-location) initial-opening-paren)))
+              (set-match-data saved-match-data)
+              (replace-match (concat argument-separator "\n")))))
 
         ;; Newline before closing paren
         (goto-char (point-max))
