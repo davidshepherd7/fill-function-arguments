@@ -34,6 +34,21 @@
   :group 'fill-function-arguments
   )
 
+(defcustom second-argument-same-line
+  nil
+  "If true keep the second argument on the same line as the first argument.
+
+e.g. as used in lisps like `(foo x
+                                 bar)'"
+  :group 'fill-function-arguments
+  )
+
+(defcustom last-argument-same-line
+  nil
+  "If true keep the last argument on the same line as the closing paren (e.g. as done in lisp)"
+  :group 'fill-function-arguments
+  )
+
 (defcustom argument-separator
   ","
   "Character separating arguments"
@@ -113,11 +128,17 @@
       (save-restriction
         (-narrow-to-funcall)
         (goto-char (point-min))
+
         ;; newline after opening paren
         (forward-char)
         (when (not first-argument-same-line)
           (insert "\n"))
 
+        (when second-argument-same-line
+          ;; Just move point after the second argument before we start
+          (search-forward argument-separator nil t))
+
+        ;; Split the arguments
         (while (search-forward argument-separator nil t)
           ;; We have to save the match data here because the functions below
           ;; could (and sometimes do) modify it.
@@ -128,9 +149,10 @@
               (replace-match (concat argument-separator "\n")))))
 
         ;; Newline before closing paren
-        (goto-char (point-max))
-        (backward-char)
-        (insert "\n")))))
+        (when (not last-argument-same-line)
+          (goto-char (point-max))
+          (backward-char)
+          (insert "\n"))))))
 
 (defun dwim ()
   (interactive)

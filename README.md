@@ -30,14 +30,20 @@ Recommended binding:
     (add-hook 'prog-mode-hook (lambda () (local-set-key (kbd "M-q") #'fill-function-arguments-dwim)))
 
 
-Also works well with xml tags with some customisation:
+Also works well with html/xml tags with some customisation:
 
     (add-hook 'sgml-mode-hook (lambda ()
                               (setq-local fill-function-arguments-first-argument-same-line t)
                               (setq-local fill-function-arguments-argument-sep " ")
                               (local-set-key (kbd "M-q") #'fill-function-arguments-dwim)))
 
-Should work for lisp-like languages in a similar way, but I haven't tried this yet.
+And for lisps:
+
+    (add-hook 'emacs-lisp-mode-hook (lambda ()
+                                      (setq-local fill-function-arguments-first-argument-same-line t)
+                                      (setq-local fill-function-arguments-second-argument-same-line t)
+                                      (setq-local fill-function-arguments-last-argument-same-line t)
+                                      (setq-local fill-function-arguments-argument-separator " ")))
 
 
 # Non-features
