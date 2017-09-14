@@ -12,13 +12,13 @@ Put point inside the brackets and call `fill-function-arguments-dwim` to convert
 to
     
     frobinate_foos(
-    	bar,
-    	baz,
-    	a_long_argument_just_for_fun,
-    	get_value(x, y)
+        bar,
+        baz,
+        a_long_argument_just_for_fun,
+        get_value(x, y)
     )
     
-    and back.
+and back.
 
 Also works with arrays (`[x, y, z]`) and dictionary literals (`{a: b, c: 1}`).
 
@@ -27,12 +27,12 @@ so you can replace an existing `fill-paragraph` keybinding with it.
 
 Recommended binding:
 
-      (add-hook 'prog-mode-hook (lambda () (local-set-key (kbd "M-q") #'fill-function-arguments-dwim)))
+    (add-hook 'prog-mode-hook (lambda () (local-set-key (kbd "M-q") #'fill-function-arguments-dwim)))
 
 
 Also works well with xml tags with some customisation:
 
-      (add-hook 'sgml-mode-hook (lambda ()
+    (add-hook 'sgml-mode-hook (lambda ()
                               (setq-local fill-function-arguments-first-argument-same-line t)
                               (setq-local fill-function-arguments-argument-sep " ")
                               (local-set-key (kbd "M-q") #'fill-function-arguments-dwim)))
