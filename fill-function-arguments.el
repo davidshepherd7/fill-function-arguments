@@ -103,10 +103,8 @@ e.g. as used in lisps like `(foo x
   (and fall-through-to-fill-paragraph
        (or (-in-comment-p)
            (-in-docs-p)
-           (and (not (derived-mode-p 'prog-mode))
-                (or (not (derived-mode-p 'sgml-mode))
-                    (not (equal (-enclosing-paren) ?<))))
-           )))
+           (and (derived-mode-p 'sgml-mode)
+                (not (equal (-enclosing-paren) ?<))))))
 
 
 
