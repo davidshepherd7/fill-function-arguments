@@ -10,5 +10,4 @@
 
 (development
  (depends-on "ecukes")
- (depends-on "espuds")
- (depends-on "names"))
+ (depends-on "espuds"))
