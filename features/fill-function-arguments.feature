@@ -2,6 +2,9 @@ Feature: Fill function arguments
   Background:
     Given I clear the buffer
     Given I turn on c++-mode
+    Given I set fill-function-arguments-argument-separator to ","
+    Given I set fill-function-arguments-trailing-separator to nil
+
 
   Scenario: to single line simple
     When I insert:
@@ -88,3 +91,44 @@ Feature: Fill function arguments
     When I go to word "lorem"
     When I call "fill-function-arguments-dwim"
     Then I should see pattern "awfoudnnrsouvn$"
+
+
+  Scenario: to-single-line trailing commas
+    When I insert:
+    """
+    foo(
+      x,
+      y,
+      z,
+    )
+    """
+    When I place the cursor after "x"
+    When I call "fill-function-arguments-dwim"
+    Then I should see "foo(x, y, z)"
+
+  Scenario: to-single-line trailing complex separator
+    When I set fill-function-arguments-argument-separator to ".*;"
+    When I insert:
+    """
+    foo(
+      x.*;
+      y.*;
+      z.*;
+    )
+    """
+    When I place the cursor after "x"
+    When I call "fill-function-arguments-dwim"
+    Then I should see "foo(x.*; y.*; z)"
+
+  Scenario: to-single-line trailing commas
+    When I set fill-function-arguments-trailing-separator to t
+    When I insert:
+    """
+    foo(x, y, z)
+    """
+    When I place the cursor after "x"
+    When I call "fill-function-arguments-dwim"
+    Then I should see pattern "foo($"
+    Then I should see pattern "x,$"
+    Then I should see pattern "y,$"
+    Then I should see pattern "z,$"

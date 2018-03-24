@@ -69,6 +69,12 @@ e.g. as used in lisps like `(foo x
   :group 'fill-function-arguments
   )
 
+(defcustom fill-function-arguments-trailing-separator
+  nil
+  "When converting to multiline form, include the separator on the final line."
+  :group 'fill-function-arguments)
+
+
 
 
 ;;; Helpers
@@ -134,7 +140,14 @@ e.g. as used in lisps like `(foo x
       (fill-function-arguments--narrow-to-brackets)
       (while (not (fill-function-arguments--single-line-p))
         (goto-char (point-max))
-        (delete-indentation)))))
+        (delete-indentation))
+
+      ;; Clean up trailing commas
+      (goto-char (point-max))
+      (backward-char)
+      (when (looking-back (regexp-quote fill-function-arguments-argument-separator)
+                          (length fill-function-arguments-argument-separator))
+        (delete-char (- (length fill-function-arguments-argument-separator)))))))
 
 (defun fill-function-arguments-to-multi-line ()
   "Convert current bracketed list to one line per argument."
@@ -168,6 +181,8 @@ e.g. as used in lisps like `(foo x
         (when (not fill-function-arguments-last-argument-same-line)
           (goto-char (point-max))
           (backward-char)
+          (when fill-function-arguments-trailing-separator
+            (insert fill-function-arguments-argument-separator))
           (insert "\n"))))))
 
 (defun fill-function-arguments-dwim ()
