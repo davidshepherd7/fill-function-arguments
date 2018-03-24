@@ -4,7 +4,7 @@
 
 ;; Author: David Shepherd <davidshepherd7@gmail.com>
 ;; Version: 0.4
-;; Package-Requires: ((emacs "24.5"))
+;; Package-Requires: ((emacs "24.4"))
 ;; Keywords: convenience
 ;; URL: https://github.com/davidshepherd7/fill-function-arguments
 
