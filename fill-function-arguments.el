@@ -39,12 +39,12 @@
 
 (defcustom fill-function-arguments-fall-through-to-fill-paragraph
   t
-  "If true dwim will fill paragraphs when in comments or strings"
+  "If true dwim will fill paragraphs when in comments or strings."
   :group 'fill-function-arguments)
 
 (defcustom fill-function-arguments-first-argument-same-line
   nil
-  "If true keep the first argument on the same line as the opening paren (e.g. as needed by xml tags)"
+  "If true keep the first argument on the same line as the opening paren (e.g. as needed by xml tags)."
   :group 'fill-function-arguments
   )
 
@@ -59,13 +59,13 @@ e.g. as used in lisps like `(foo x
 
 (defcustom fill-function-arguments-last-argument-same-line
   nil
-  "If true keep the last argument on the same line as the closing paren (e.g. as done in lisp)"
+  "If true keep the last argument on the same line as the closing paren (e.g. as done in Lisp)."
   :group 'fill-function-arguments
   )
 
 (defcustom fill-function-arguments-argument-separator
   ","
-  "Character separating arguments"
+  "Character separating arguments."
   :group 'fill-function-arguments
   )
 
@@ -74,25 +74,25 @@ e.g. as used in lisps like `(foo x
 ;;; Helpers
 
 (defun fill-function-arguments--in-comment-p ()
-  "Check if we are inside a comment"
+  "Check if we are inside a comment."
   (nth 4 (syntax-ppss)))
 
 (defun fill-function-arguments--in-docs-p ()
-  "Check if we are inside a string or comment"
+  "Check if we are inside a string or comment."
   (nth 8 (syntax-ppss)))
 
 (defun fill-function-arguments--opening-paren-location ()
+  "Find the location of the current opening parenthesis."
   (nth 1 (syntax-ppss)))
 
 (defun fill-function-arguments--enclosing-paren ()
-  "Return the opening parenthesis of the enclosing parens, or nil
-        if not inside any parens."
+  "Return the opening parenthesis of the enclosing parens, or nil if not inside any parens."
   (let ((ppss (syntax-ppss)))
     (when (nth 1 ppss)
       (char-after (nth 1 ppss)))))
 
 (defun fill-function-arguments--paren-locations ()
-  "Get a pair containing the enclosing parens"
+  "Get a pair containing the enclosing parens."
   (let ((start (fill-function-arguments--opening-paren-location)))
     (when start
       (cons start
@@ -102,7 +102,8 @@ e.g. as used in lisps like `(foo x
               (forward-sexp)
               (point))))))
 
-(defun fill-function-arguments--narrow-to-funcall ()
+(defun fill-function-arguments--narrow-to-brackets ()
+  "Narrow to region inside current brackets."
   (interactive)
   (let ((l (fill-function-arguments--paren-locations)))
     (when l
@@ -113,7 +114,8 @@ e.g. as used in lisps like `(foo x
   "Is the current function call on a single line?"
   (equal (line-number-at-pos (point-max)) 1))
 
-(defun fill-function-arguments--suppress-argument-fill-p ()
+(defun fill-function-arguments--do-argument-fill-p ()
+  "Should we call fill-paragraph?"
   (and fill-function-arguments-fall-through-to-fill-paragraph
        (or (fill-function-arguments--in-comment-p)
            (fill-function-arguments--in-docs-p)
@@ -125,20 +127,22 @@ e.g. as used in lisps like `(foo x
 ;;; Main functions
 
 (defun fill-function-arguments-to-single-line ()
+  "Convert current bracketed list to a single line."
   (interactive)
   (save-excursion
     (save-restriction
-      (fill-function-arguments--narrow-to-funcall)
+      (fill-function-arguments--narrow-to-brackets)
       (while (not (fill-function-arguments--single-line-p))
         (goto-char (point-max))
         (delete-indentation)))))
 
 (defun fill-function-arguments-to-multi-line ()
+  "Convert current bracketed list to one line per argument."
   (interactive)
   (let ((initial-opening-paren (fill-function-arguments--opening-paren-location)))
     (save-excursion
       (save-restriction
-        (fill-function-arguments--narrow-to-funcall)
+        (fill-function-arguments--narrow-to-brackets)
         (goto-char (point-min))
 
         ;; newline after opening paren
@@ -167,11 +171,21 @@ e.g. as used in lisps like `(foo x
           (insert "\n"))))))
 
 (defun fill-function-arguments-dwim ()
+  "Fill the thing at point in a context-sensitive way.
+
+If point is a string or comment and
+`fill-function-arguments-fall-through-to-fill-paragraph' is
+enabled, then just run `fill-paragragh'.
+
+Otherwise if point is inside a bracketed list (e.g. a function
+call, an array declaration, etc.) then if the list is currently
+on a single line call `fill-function-arguments-to-multi-line',
+otherwise call `fill-function-arguments-to-single-line'."
   (interactive)
   (save-restriction
-    (fill-function-arguments--narrow-to-funcall)
+    (fill-function-arguments--narrow-to-brackets)
     (cond
-     ((fill-function-arguments--suppress-argument-fill-p) (fill-paragraph))
+     ((fill-function-arguments--do-argument-fill-p) (fill-paragraph))
      ((fill-function-arguments--single-line-p) (fill-function-arguments-to-multi-line))
      (t (fill-function-arguments-to-single-line)))))
 
