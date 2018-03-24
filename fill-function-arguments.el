@@ -45,8 +45,7 @@
 (defcustom fill-function-arguments-first-argument-same-line
   nil
   "If true keep the first argument on the same line as the opening paren (e.g. as needed by xml tags)."
-  :group 'fill-function-arguments
-  )
+  :group 'fill-function-arguments)
 
 (defcustom fill-function-arguments-second-argument-same-line
   nil
@@ -54,20 +53,17 @@
 
 e.g. as used in lisps like `(foo x
                                  bar)'"
-  :group 'fill-function-arguments
-  )
+  :group 'fill-function-arguments)
 
 (defcustom fill-function-arguments-last-argument-same-line
   nil
   "If true keep the last argument on the same line as the closing paren (e.g. as done in Lisp)."
-  :group 'fill-function-arguments
-  )
+  :group 'fill-function-arguments)
 
 (defcustom fill-function-arguments-argument-separator
   ","
   "Character separating arguments."
-  :group 'fill-function-arguments
-  )
+  :group 'fill-function-arguments)
 
 (defcustom fill-function-arguments-trailing-separator
   nil
