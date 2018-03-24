@@ -57,10 +57,13 @@ And for lisps:
   someone wants it (open an issue if you do).
 
 
+# Related
+
+This is effectively the emacs version of
+[vim-argwrap](https://github.com/FooSoft/vim-argwrap), although it was developed
+completely independently.
+
 
 # Installation
 
 Drop `fill-function-arguments.el` into your path and `require` it.
-
-I haven't bothered to put this on melpa yet because I'm not sure if anyone else would use 
-it... let me know if you want it on melpa.
