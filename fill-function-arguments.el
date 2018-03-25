@@ -132,6 +132,7 @@ e.g. as used in lisps like `(foo x
 
 ;;; Main functions
 
+;;;###autoload
 (defun fill-function-arguments-to-single-line ()
   "Convert current bracketed list to a single line."
   (interactive)
@@ -149,6 +150,7 @@ e.g. as used in lisps like `(foo x
                           (length fill-function-arguments-argument-separator))
         (delete-char (- (length fill-function-arguments-argument-separator)))))))
 
+;;;###autoload
 (defun fill-function-arguments-to-multi-line ()
   "Convert current bracketed list to one line per argument."
   (interactive)
@@ -185,6 +187,7 @@ e.g. as used in lisps like `(foo x
             (insert fill-function-arguments-argument-separator))
           (insert "\n"))))))
 
+;;;###autoload
 (defun fill-function-arguments-dwim ()
   "Fill the thing at point in a context-sensitive way.
 
