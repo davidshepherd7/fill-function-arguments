@@ -36,20 +36,24 @@
 
 ;;; Code:
 
+(defgroup fill-function-arguments '()
+  "Add/remove line breaks between function arguments and similar constructs."
+  :group 'convenience)
+
 
 (defcustom fill-function-arguments-fall-through-to-fill-paragraph
   t
-  "If true dwim will fill paragraphs when in comments or strings."
+  "If non-nil `fill-function-arguments-dwim' will fill paragraphs when in comments or strings."
   :group 'fill-function-arguments)
 
 (defcustom fill-function-arguments-first-argument-same-line
   nil
-  "If true keep the first argument on the same line as the opening paren (e.g. as needed by xml tags)."
+  "If non-nil keep the first argument on the same line as the opening paren (e.g. as needed by xml tags)."
   :group 'fill-function-arguments)
 
 (defcustom fill-function-arguments-second-argument-same-line
   nil
-  "If true keep the second argument on the same line as the first argument.
+  "If non-nil keep the second argument on the same line as the first argument.
 
 e.g. as used in lisps like `(foo x
                                  bar)'"
@@ -57,7 +61,7 @@ e.g. as used in lisps like `(foo x
 
 (defcustom fill-function-arguments-last-argument-same-line
   nil
-  "If true keep the last argument on the same line as the closing paren (e.g. as done in Lisp)."
+  "If non-nil keep the last argument on the same line as the closing paren (e.g. as done in Lisp)."
   :group 'fill-function-arguments)
 
 (defcustom fill-function-arguments-argument-separator
