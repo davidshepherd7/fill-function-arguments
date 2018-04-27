@@ -134,6 +134,16 @@ e.g. as used in lisps like `(foo x
            (and (derived-mode-p 'sgml-mode)
                 (not (equal (fill-function-arguments--enclosing-paren) ?<))))))
 
+
+(defun fill-function-arguments--trim-right (s)
+  "Remove whitespace at the end of S.
+
+Borrowed from s.el to avoid a dependency"
+  (save-match-data
+    (if (string-match "[ \t\n\r]+\\'" s)
+        (replace-match "" t t s)
+      s)))
+
 
 
 ;;; Main functions
@@ -160,7 +170,8 @@ e.g. as used in lisps like `(foo x
 (defun fill-function-arguments-to-multi-line ()
   "Convert current bracketed list to one line per argument."
   (interactive)
-  (let ((initial-opening-paren (fill-function-arguments--opening-paren-location)))
+  (let ((initial-opening-paren (fill-function-arguments--opening-paren-location))
+        (argument-separator-no-trailing-whitespace (fill-function-arguments--trim-right fill-function-arguments-argument-separator)))
     (save-excursion
       (save-restriction
         (fill-function-arguments--narrow-to-brackets)
@@ -183,14 +194,14 @@ e.g. as used in lisps like `(foo x
             (when (save-excursion (and (not (fill-function-arguments--in-docs-p))
                                        (equal (fill-function-arguments--opening-paren-location) initial-opening-paren)))
               (set-match-data saved-match-data)
-              (replace-match (concat fill-function-arguments-argument-separator "\n")))))
+              (replace-match (concat argument-separator-no-trailing-whitespace "\n")))))
 
         ;; Newline before closing paren
         (when (not fill-function-arguments-last-argument-same-line)
           (goto-char (point-max))
           (backward-char)
           (when fill-function-arguments-trailing-separator
-            (insert fill-function-arguments-argument-separator))
+            (insert argument-separator-no-trailing-whitespace))
           (insert "\n"))))))
 
 ;;;###autoload

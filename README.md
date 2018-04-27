@@ -49,12 +49,7 @@ And for lisps:
 # Non-features
 
 * Doesn't try to fix the indentation. I use aggressive-indent-mode which
-  automatically does this after every operation. Would probably be tricky to
-  implement this so I doubt I will.
-
-* Doesn't try to clean up trailing whitespace. I use ws-butler to automatically
-  clean it up. Could probably implement this without too much difficulty if
-  someone wants it (open an issue if you do).
+  automatically does this after every operation.
 
 
 # Related

@@ -41,11 +41,11 @@ Feature: Fill html tag attributes
     """
     When I place the cursor after "x"
     When I call "fill-function-arguments-to-multi-line"
-    Then I should see pattern "<foo\s-*$"
-    Then I should see pattern "x\s-*$"
-    Then I should see pattern "y\s-*$"
-    Then I should see pattern "z\s-*$"
-    Then I should see pattern ">\s-*$"
+    Then I should see pattern "<foo$"
+    Then I should see pattern "x$"
+    Then I should see pattern "y$"
+    Then I should see pattern "z$"
+    Then I should see pattern ">$"
 
 
   Scenario: to multi line html with attribute arguments
@@ -55,11 +55,11 @@ Feature: Fill html tag attributes
     """
     When I place the cursor after "x"
     When I call "fill-function-arguments-to-multi-line"
-    Then I should see pattern "<foo\s-*$"
-    Then I should see pattern "x="one"\s-*$"
-    Then I should see pattern "y="two"\s-*$"
-    Then I should see pattern "z="three"\s-*$"
-    Then I should see pattern ">\s-*$"
+    Then I should see pattern "<foo$"
+    Then I should see pattern "x="one"$"
+    Then I should see pattern "y="two"$"
+    Then I should see pattern "z="three"$"
+    Then I should see pattern ">$"
 
 
   Scenario: dwim fill tags as tags
@@ -69,9 +69,9 @@ Feature: Fill html tag attributes
     """
     When I place the cursor after "x"
     When I call "fill-function-arguments-dwim"
-    Then I should see pattern "<foo\s-*$"
-    Then I should see pattern "x\s-*$"
-    Then I should see pattern "y\s-*$"
+    Then I should see pattern "<foo$"
+    Then I should see pattern "x$"
+    Then I should see pattern "y$"
 
 
   Scenario: dwim fill text as text

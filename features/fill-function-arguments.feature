@@ -47,6 +47,19 @@ Feature: Fill function arguments
     When I call "fill-function-arguments-to-multi-line"
     Then I should see "g(a, b, c)"
 
+  Scenario: to multi line trailing spaces
+    When I insert:
+    """
+    foo( x , y,   z)
+    """
+    When I place the cursor after "x"
+    When I call "fill-function-arguments-to-multi-line"
+    Then I should see pattern "foo($"
+    Then I should see pattern "x ,$"
+    Then I should see pattern "y,$"
+    Then I should see pattern "z$"
+
+
 
   # DWIM function
   Scenario: dwim to multi line
