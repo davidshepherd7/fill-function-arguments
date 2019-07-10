@@ -145,3 +145,20 @@ Feature: Fill function arguments
     Then I should see pattern "x,$"
     Then I should see pattern "y,$"
     Then I should see pattern "z,$"
+
+  Scenario: indent after fill
+    # Python has reasonable defaults for indentation, so use that
+    Given I turn on python-mode
+    Given I set python-indent-offset to 4
+    Given I set fill-function-arguments-indent-after-fill to t
+    When I insert:
+    """
+    const auto a = foo(x, y, z)
+    """
+    When I place the cursor after "x"
+    When I call "fill-function-arguments-to-multi-line"
+    Then I should see pattern "^const auto a = foo($"
+    Then I should see pattern "^    x,$"
+    Then I should see pattern "^    y,$"
+    Then I should see pattern "^    z$"
+    Then I should see pattern "^)$"

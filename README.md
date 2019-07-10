@@ -46,11 +46,10 @@ And for lisps:
                                       (setq-local fill-function-arguments-argument-separator " ")))
 
 
-# Non-features
-
-* Doesn't try to fix the indentation. I use aggressive-indent-mode which
-  automatically does this after every operation.
-
+By default fill function arguments does not fix the indentation for you (I use
+[aggressive-indent-mode](https://github.com/Malabarba/aggressive-indent-mode)
+for this). You can enable automatic indentation after converting to the
+multiline form by setting `fill-function-arguments-indent-after-fill` to `t`.
 
 # Related
 

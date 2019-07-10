@@ -80,6 +80,14 @@ e.g. as used in lisps like `(foo x
   :group 'fill-function-arguments
   :type 'boolean)
 
+(defcustom fill-function-arguments-indent-after-fill
+  nil
+  "If non-nill after converting to multiline form, re-indent the affected lines.
+
+The indentation uses `indent-region' "
+  :group 'fill-function-arguments-indent-after-fill
+  :type 'boolean)
+
 
 
 
@@ -202,7 +210,10 @@ Borrowed from s.el to avoid a dependency"
           (backward-char)
           (when fill-function-arguments-trailing-separator
             (insert argument-separator-no-trailing-whitespace))
-          (insert "\n"))))))
+          (insert "\n"))
+
+        (when fill-function-arguments-indent-after-fill
+          (indent-region (point-min) (point-max)))))))
 
 ;;;###autoload
 (defun fill-function-arguments-dwim ()
