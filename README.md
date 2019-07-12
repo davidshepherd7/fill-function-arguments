@@ -29,6 +29,7 @@ Recommended binding:
 
     (add-hook 'prog-mode-hook (lambda () (local-set-key (kbd "M-q") #'fill-function-arguments-dwim)))
 
+(note: some modes, e.g. C-derived modes, bind their own fill paragraph function which will override this so for those modes you'll need to bind the key in that specific mode).
 
 Also works well with html/xml tags with some customisation:
 
