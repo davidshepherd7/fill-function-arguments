@@ -85,7 +85,7 @@ e.g. as used in lisps like `(foo x
   "If non-nill after converting to multiline form, re-indent the affected lines.
 
 The indentation uses `indent-region' "
-  :group 'fill-function-arguments-indent
+  :group 'fill-function-arguments
   :type 'boolean)
 
 
