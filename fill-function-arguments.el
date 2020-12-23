@@ -82,11 +82,14 @@ e.g. as used in lisps like `(foo x
 
 (defcustom fill-function-arguments-indent-after-fill
   nil
-  "If non-nill after converting to multiline form, re-indent the affected lines.
+  "If non-nil then after converting to multiline form re-indent the affected lines.
 
-The indentation uses `indent-region' "
+If set to a function, the function is called to indent the region, otherwise `indent-region' is used.
+
+In either case the indentation function is called with arguments `start' and `end' which are the point
+of the opening and closing brackets respectively."
   :group 'fill-function-arguments
-  :type 'boolean)
+  :type '(choice 'boolean 'function))
 
 
 
@@ -213,7 +216,9 @@ Borrowed from s.el to avoid a dependency"
           (insert "\n"))
 
         (when fill-function-arguments-indent-after-fill
-          (indent-region (point-min) (point-max)))))))
+          (if (functionp fill-function-arguments-indent-after-fill)
+              (funcall fill-function-arguments-indent-after-fill (point-min) (point-max))
+            (indent-region (point-min) (point-max))))))))
 
 ;;;###autoload
 (defun fill-function-arguments-dwim ()
