@@ -36,8 +36,9 @@ jobs:
       - uses: purcell/setup-emacs@master
         with:
           version: ${{ matrix.emacs_version }}
-
-      - name: Emacs Lisp check
-        uses: leotaku/elisp-check@v1.0
-        with:
-          file: fill-function-arguments.el
+          
+      - name: Install Cask
+        run: curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
+        
+      - name: Install dependencies
+        run: make install
