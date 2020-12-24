@@ -1,7 +1,9 @@
 # fill-function-arguments
 Add/remove line breaks between function arguments and similar constructs
 
-[![Travis](https://travis-ci.org/davidshepherd7/fill-function-arguments.svg?branch=master)](https://travis-ci.org/davidshepherd7/fill-function-arguments) [![MELPA](https://melpa.org/packages/fill-function-arguments-badge.svg)](https://melpa.org/#/fill-function-arguments) [![MELPA](http://stable.melpa.org/packages/fill-function-arguments-badge.svg)](http://stable.melpa.org/#/fill-function-arguments)
+[![actions](https://github.com/davidshepherd7/fill-function-arguments/workflows/CI/badge.svg)](https://github.com/davidshepherd7/fill-function-arguments/actions)
+[![MELPA](https://melpa.org/packages/fill-function-arguments-badge.svg)](https://melpa.org/#/fill-function-arguments)
+[![MELPA stable](http://stable.melpa.org/packages/fill-function-arguments-badge.svg)](http://stable.melpa.org/#/fill-function-arguments)
 
 # Usage
 
