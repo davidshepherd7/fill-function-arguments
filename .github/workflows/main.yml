@@ -24,8 +24,8 @@ jobs:
       matrix:
         emacs_version:
           - 24.5
-          - 25.1
-          - 26.1
+          - 25.3
+          - 26.3
           - 27.1
 
     steps:
