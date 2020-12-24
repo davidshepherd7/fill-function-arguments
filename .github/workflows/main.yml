@@ -25,9 +25,9 @@ jobs:
         emacs_version:
           - 24.5
           - 25.1
+          - 26.1
           - 27.1
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -42,3 +42,9 @@ jobs:
         
       - name: Install dependencies
         run: PATH="/home/runner/.cask/bin:$PATH" make install
+        
+      - name: Build
+        run: PATH="/home/runner/.cask/bin:$PATH" make build
+        
+      - name: Test
+        run: PATH="/home/runner/.cask/bin:$PATH" make test
