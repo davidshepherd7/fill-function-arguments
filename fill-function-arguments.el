@@ -233,12 +233,13 @@ call, an array declaration, etc.) then if the list is currently
 on a single line call `fill-function-arguments-to-multi-line',
 otherwise call `fill-function-arguments-to-single-line'."
   (interactive)
-  (save-restriction
-    (fill-function-arguments--narrow-to-brackets)
-    (cond
-     ((fill-function-arguments--do-argument-fill-p) (fill-paragraph))
-     ((fill-function-arguments--single-line-p) (fill-function-arguments-to-multi-line))
-     (t (fill-function-arguments-to-single-line)))))
+  (if (fill-function-arguments--do-argument-fill-p)
+      (fill-paragraph)
+    (save-restriction
+      (fill-function-arguments--narrow-to-brackets)
+      (cond
+       ((fill-function-arguments--single-line-p) (fill-function-arguments-to-multi-line))
+       (t (fill-function-arguments-to-single-line))))))
 
 
 
