@@ -221,7 +221,7 @@ Borrowed from s.el to avoid a dependency"
             (indent-region (point-min) (point-max))))))))
 
 ;;;###autoload
-(defun fill-function-arguments-dwim (&optional arg)
+(defun fill-function-arguments-dwim ()
   "Fill the thing at point in a context-sensitive way.
 
 If point is a string or comment and
@@ -232,9 +232,9 @@ Otherwise if point is inside a bracketed list (e.g. a function
 call, an array declaration, etc.) then if the list is currently
 on a single line call `fill-function-arguments-to-multi-line',
 otherwise call `fill-function-arguments-to-single-line'."
-  (interactive "P")
+  (interactive)
   (if (fill-function-arguments--do-argument-fill-p)
-      (fill-paragraph arg t)
+      (call-interactively #'fill-paragraph)
     (save-restriction
       (fill-function-arguments--narrow-to-brackets)
       (cond
