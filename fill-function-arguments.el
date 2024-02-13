@@ -43,13 +43,15 @@
 
 (defcustom fill-function-arguments-fall-through-to-fill-paragraph
   t
-  "If non-nil `fill-function-arguments-dwim' will fill paragraphs when in comments or strings."
+  "If non-nil `fill-function-arguments-dwim' will fill
+paragraphs in comments or strings."
   :group 'fill-function-arguments
   :type 'boolean)
 
 (defcustom fill-function-arguments-first-argument-same-line
   nil
-  "If non-nil keep the first argument on the same line as the opening paren (e.g. as needed by xml tags)."
+  "If non-nil keep the first argument on the same line as the
+opening paren (e.g. as needed by xml tags)."
   :group 'fill-function-arguments
   :type 'boolean)
 
@@ -64,7 +66,8 @@ e.g. as used in lisps like `(foo x
 
 (defcustom fill-function-arguments-last-argument-same-line
   nil
-  "If non-nil keep the last argument on the same line as the closing paren (e.g. as done in Lisp)."
+  "If non-nil keep the last argument on the same line as the closing
+paren (e.g. as done in Lisp)."
   :group 'fill-function-arguments
   :type 'boolean)
 
@@ -82,12 +85,15 @@ e.g. as used in lisps like `(foo x
 
 (defcustom fill-function-arguments-indent-after-fill
   nil
-  "If non-nil then after converting to multiline form re-indent the affected lines.
+  "If non-nil then after converting to multiline form re-indent the
+affected lines.
 
-If set to a function, the function is called to indent the region, otherwise `indent-region' is used.
+If set to a function, the function is called to indent the
+region, otherwise `indent-region' is used.
 
-In either case the indentation function is called with arguments `start' and `end' which are the point
-of the opening and closing brackets respectively."
+In either case the indentation function is called with arguments
+`start' and `end' which are the point of the opening and closing
+brackets respectively."
   :group 'fill-function-arguments
   :type '(choice 'boolean 'function))
 
@@ -109,7 +115,8 @@ of the opening and closing brackets respectively."
   (nth 1 (syntax-ppss)))
 
 (defun fill-function-arguments--enclosing-paren ()
-  "Return the opening parenthesis of the enclosing parens, or nil if not inside any parens."
+  "Return the opening parenthesis of the enclosing parens, or nil if
+not inside any parens."
   (let ((ppss (syntax-ppss)))
     (when (nth 1 ppss)
       (char-after (nth 1 ppss)))))
