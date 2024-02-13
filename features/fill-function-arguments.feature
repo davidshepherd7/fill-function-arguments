@@ -96,7 +96,7 @@ Feature: Fill function arguments
     When I call "fill-function-arguments-dwim"
     Then I should see pattern "awfoudnnrsouvn$"
 
-  Scenario: dwim fill comments
+  Scenario: dwim fill strings
     When I insert:
     """
     "lorem ipsum aoru aouwf owu awoupna awfoudnnrsouvn oseinadn4iresarostunoaunawfonuawufn asoun afwun afoutn awfonu"
@@ -105,6 +105,16 @@ Feature: Fill function arguments
     When I call "fill-function-arguments-dwim"
     Then I should see pattern "awfoudnnrsouvn$"
 
+  Scenario: dwim fill comments with prefix to justify
+    When I insert:
+    """
+    // lorem ipsum aoru aouwf owu awoupna awfoudnnrsouvn oseinadn4iresarostunoaunawfonuawufn asoun afwun afoutn awfonu
+    """
+    When I go to word "lorem"
+    When I call "universal-argument"
+    When I call "fill-function-arguments-dwim"
+    # Justifying inserts multiple spaces on the first line before the wrap
+    Then I should see pattern "   awfoudnnrsouvn$"
 
   Scenario: to-single-line trailing commas
     When I insert:
