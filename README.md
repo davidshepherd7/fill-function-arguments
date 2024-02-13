@@ -54,6 +54,12 @@ By default fill function arguments does not fix the indentation for you (I use
 for this). You can enable automatic indentation after converting to the
 multiline form by setting `fill-function-arguments-indent-after-fill` to `t`.
 
+# Changelog
+
+## Unstable
+
+* Fix not passing along interactive arguments to fill-paragraph.
+
 # Related
 
 This is effectively the emacs version of
